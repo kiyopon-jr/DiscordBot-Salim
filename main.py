@@ -76,7 +76,24 @@ class YTDLSource(discord.PCMVolumeTransformer):  # Преобразовател�
             channel = ctx.message.author.voice.channel
             await channel.connect()
 
-    # Команда для воспроизведения песни
+    # Команда для воспроизведения песни !play
     @bot.command(name='play')
     async def play(ctx, url):
-        server =
+        server = ctx.message.guild  # чтобы получить объект сообщения
+        voice_channel = server.voice_client # присоединиться к голосовому каналу откуда был получен объект сообщения
+        async with ctx.typing():
+            filename = await YTDLSource.from_url(url, loop=bot.loop)  # передадим в ф-ию from_url URL-адрес
+            voice_channel.play(discord.FFmpegPCMAudio(executable="", source=filename))
+        await ctx.send(f'**Now Playing:** {filename}')
+
+    # Команда для паузы !pause
+    @bot.command(name='pause')
+    async def pause(ctx):
+        voice_client = ctx.message.guild.voice_client # уже в голосовом чате
+        if voice_client.is_playing():
+            await  voice_client.pause()
+        else:
+            await ctx.send("The bot has pauses the music")
+
+    # Команда для возобновления !resume
+
