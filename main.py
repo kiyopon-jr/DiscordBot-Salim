@@ -79,4 +79,4 @@ class YTDLSource(discord.PCMVolumeTransformer):  # Преобразовател�
     # Команда для воспроизведения песни
     @bot.command(name='play')
     async def play(ctx, url):
-        server
+        server =
