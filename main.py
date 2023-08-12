@@ -133,5 +133,15 @@ async def stop(ctx):
         await ctx.send("The bot isn't playing anything")
 
 
+# Команда пропуска текущего !skip
+@bot.command(name="skip")
+async def skip(ctx):
+    voice_client = ctx.message.guild.voice_client
+    if voice_client.is_playing():
+        await voice_client.skip()
+    else:
+        await ctx.send("The bot isn't playing anything")
+
+
 if __name__ == "__main__":
     bot.run(DISCORD_TOKEN)
