@@ -87,7 +87,7 @@ async def play(ctx, url):
     async with ctx.typing():
         filename = await YTDLSource.from_url(url, loop=bot.loop)  # передадим в ф-ию from_url URL-адрес
         voice_channel.play(discord.FFmpegPCMAudio(
-            executable="C:\\Users\\user\\PycharmProjects\\DiscordBot-Salim\\ffmpeg-2023-08-10-git-d9d5695390-full_build\\bin",
+            executable="C:\\Users\\user\\PycharmProjects\\DiscordBot-Salim\\ffmpeg.exe",
             source=filename))
     await ctx.send(f'**Now Playing:** {filename}')
 
@@ -130,7 +130,7 @@ async def stop(ctx):
     if voice_client.is_playing():
         await voice_client.stop()
     else:
-        ctx.send("The bot isn't playing anything")
+        await ctx.send("The bot isn't playing anything")
 
 
 if __name__ == "__main__":
